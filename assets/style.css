@@ -1,0 +1,49 @@
+.id {
+  width: 5%;
+}
+
+.issue {
+  width: 80%;
+}
+
+.user {
+  width: 15%;
+}
+
+table {
+  margin-top: 20px;
+}
+
+th {
+  text-align: center !important;
+}
+
+footer {
+  border-top: 1px solid #eeeeee;
+  padding-top: 10px;
+}
+
+.next {
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.labels {
+  color: #777777;
+}
+
+.title {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.description {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-style: normal;
+  line-height: 20px;
+}

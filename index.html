@@ -31,8 +31,30 @@
   
   <!-- content -->
   <div class="container" id="container">
-    <h1>TITLE TITLE</h1>
-    <p>content<p>
+    <h1>Github Issues Viewer: rails/rails</h1>
+    <button class="btn prev">Prev</button>
+    <button class="btn next">Next</button>
+    <table class="table table-striped table-bordered" id="issues-list">
+      <tr style="text-align:center;">
+        <th class="id">#</th>
+        <th class="issue">Issue</th>
+        <th class="user">Submitted by</th>
+      </tr>
+      <tr>
+        <td><center>####</center></td>
+        <td>
+          <strong class="title">OMG AN ISSUE  </strong>
+          <strong class="labels">[ label1, label2, label3 ]</strong>
+          <br>
+          <p class="description">
+            a 140 char description goes here.
+          </p>
+        </td>
+        <td><center><img src="https://secure.gravatar.com/avatar/0fa724a5dc487a85bdaeb541ac53c67d?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="40px;" /><br>abekim</center></td>
+      </tr>
+    </table>
+    <button class="btn prev">Prev</button>
+    <button class="btn next">Next</button>
   </div>
 
   <!-- footer -->
@@ -45,10 +67,41 @@
     </div>
   </footer>
 
+  <!-- templates -->
+  <script type="text/template" id="issue-template">
+    <td><center><%= number %></center></td>
+    <td>
+      <strong class="title"><%= title %>  </strong>
+      <% if (labels.length) { %>
+        <% var lb = labels[0].name; %>
+        <% _.each(labels, function(label) { %>
+          <% if (label.name != lb) { lb = lb + ', ' + label.name; } %>
+        <% }); %>
+        <strong class="labels">[ <%= lb %> ]</strong>
+      <% } %>
+      <br>
+      <% if (body.length) { %>
+        <p class="description">
+          <% if (body.length >= 140) { %>
+            <% var msg = body.substring(0, 140); %>
+            <% var index = msg.lastIndexOf(' '); %>
+          <% } else { var msg = body }%>
+          <%= msg %>
+        </p>
+      <% } %>
+    </td>
+    <td><center><img src="<%= user.avatar_url %>" width="40px;" /><br><%= user.login %></center></td>
+  </script>
+
   <!-- load js -->
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
   <script src="assets/lodash.min.js"></script>
   <script src="lib/backbone.js"></script>
   <script src="lib/backbone.localStorage.js"></script>
+  <script src="models/issue.js"></script>
+  <script src="collections/issues.js"></script>
+  <script src="views/issueView.js"></script>
+  <script src="views/appView.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
