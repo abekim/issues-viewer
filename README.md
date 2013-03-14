@@ -17,7 +17,7 @@ Displaying the data in a traditional table format (each attribute with its own c
 
 What I do like, however, is how the [original GitHub issues page](https://github.com/rails/rails/issues) went about displaying the title and the requestor. I believe I can do something similar, as shown in my beautiful ASCII art:
 
-![layout](https://github.com/abekim/issues-viewer/blob/master/layout.jpg)
+![layout](https://github.com/abekim/issues-viewer/blob/master/layout.jpg?raw=true)
 
 Doing this can justify the display of gravatar on the main page and will help fill out the real estate.
 
