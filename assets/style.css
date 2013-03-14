@@ -47,3 +47,7 @@ footer {
   font-style: normal;
   line-height: 20px;
 }
+
+.inv {
+  visibility: hidden;
+}

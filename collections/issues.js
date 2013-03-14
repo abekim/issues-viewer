@@ -8,7 +8,14 @@ var app = app || {};
 
     model: app.Issue,
 
-    localStorage: new Store('local-issues'), //set local storage
+    localStorage: new Store('i'), //set local storage
+
+    //checks to see if an issue with given num exists in coll
+    exists: function (num) {
+      return this.filter(function (issue) {
+        return issue.get('number') == num;
+      })
+    },
 
     //we need to keep the issues in a sequential order,
     //  and the way to do it would be by giving an "order"
