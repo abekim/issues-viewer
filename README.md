@@ -41,6 +41,16 @@ However, I think it makes sense to just use Bootstrap because it is a resource a
 
 Hmm, I might have to think about this for a while. For now, I'm gonna go ahead and get started on the main objective -- pull data from github/load data correctly.
 
+Okay, now that I'm done with all the other implementations, I should really start thinking about the details page.
+
+Currently, I'm thinking it would mainly be separated into a "top (header)" section that includes all major informations about the issue, and then a "bottom (comments)" section that has comments by other users. 
+
+As bad as it sounds, I'm not feeling too creative with the css at this point... I'll use bootstrap's rows to differentiate between the two sections.
+
+#### Comments
+
+I never realized the comments weren't a part of the issue object that we get from GitHub. We do get the comments, so this means we'll just need to make another API call, preferrably when we're saving issue objects. Comments will have their own MVC.
+
 ### Future exploration (more features!)
 
 It would be great to extend the functionality of this app to other users, repos, etc. It shouldn't be too hard to implement: using a form, I would collect the user/repo data and run the API calls based on these data. I would have to bind the API calls to the form submission, which again, isn't too hard to implement.
