@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Github Issues Viewer</title>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="http://cloud.github.com/downloads/jaubourg/jquery-jsonp/jquery.jsonp-2.4.0.min.js"></script>
+  <style>
+    body {
+      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+  </style>
+</head>
+<body>
+  <!-- navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="brand"><strong>Issues Viewer</strong></a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- content -->
+  <div class="container" id="container">
+    <h1>TITLE TITLE</h1>
+    <p>content<p>
+  </div>
+
+  <!-- footer -->
+  <footer style="margin-top: 20px" class="footer">
+    <div class="container">
+      <p class="pull-right">
+        <a href="#">Back to top</a>
+      </p>
+      <p>@ 2013 Eun Abe Kim</p>
+    </div>
+  </footer>
+
+  <!-- load js -->
+  <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+  <script src="assets/lodash.min.js"></script>
+  <script src="lib/backbone.js"></script>
+  <script src="lib/backbone.localStorage.js"></script>
+</body>
+</html>
