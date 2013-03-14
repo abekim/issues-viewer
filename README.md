@@ -15,12 +15,7 @@ The tricky part is getting only 25 of them. One way to do it would be to count 2
 
 Displaying the data in a traditional table format (each attribute with its own column) would make it hard to see all the relevant information. Also, I'm not really sure it makes a lot of sense to include the users' gravatar in the main page. Getting the gravatar isn't hard: issue.user.avatar_url will be the src url for the img tag, but it just seems like a bad design choice. It not only takes up more than necessary amount of space, but it draws the viewer's attention to the images (which isn't what we want).
 
-What I do like, however, is how the [original GitHub issues page](https://github.com/rails/rails/issues) went about displaying the title and the requestor. I believe I can do something similar:
- _________________________________________________
-|   |                                    |        |
-| # |               TITLE                | avatar |
-|   |       140 char. description        |  user  |
-|___|____________________________________|________|
+What I do like, however, is how the [original GitHub issues page](https://github.com/rails/rails/issues) went about displaying the title and the requestor. I believe I can do something similar, as shown in my beautiful ASCII art:
 
 Doing this can justify the display of gravatar on the main page and will help fill out the real estate.
 
