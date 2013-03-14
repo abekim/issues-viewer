@@ -50,7 +50,7 @@ $(function ($) {
     },
 
     render: function () {
-      $('.brand').text("Github Issues Viewer").attr('href', app.url);
+      $('.brand').text("Github Issues Viewer");
 
       //use router to navigate between different pages
       $('.prev').attr('href','#/' + (app.page - 1).toString());
@@ -175,8 +175,8 @@ $(function ($) {
     //load detail template instead of home template
     details: function () {
       //a "back to listing" button. It would be nice to have a more intuitive
-      //  button that does this job, but this works too.
-      $('.brand').text("Back to Listing").attr('href', app.url + '#/' + app.page);
+      //  button that does the job. Currently, it takes your back to home.
+      $('.brand').text("Back to Listing");
 
       //retrieve relevant comments
       this.retrieveComments();
