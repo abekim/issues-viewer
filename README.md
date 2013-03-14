@@ -52,3 +52,5 @@ I never realized the comments weren't a part of the issue object that we get fro
 ## Future exploration (more features!)
 
 It would be great to extend the functionality of this app to other users, repos, etc. It shouldn't be too hard to implement: using a form, I would collect the user/repo data and run the API calls based on these data. I would have to bind the API calls to the form submission, which again, isn't too hard to implement.
+
+I'm gonna push converting `codes` to their specific blocks here because it's not *the most* important feature. It is pretty important to have it in the app, but not entirely necessary. For now, I'll redact them to `[redacted]` and if I have time, I will go back to it and work on it.
