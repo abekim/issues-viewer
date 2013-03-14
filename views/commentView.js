@@ -7,7 +7,7 @@ $(function () {
   app.CommentView = Backbone.View.extend({
 
     //specify tr tag
-    tagName: 'tr',
+    tagName: 'div',
 
     //load template
     template: _.template($('#comment-template').html()),

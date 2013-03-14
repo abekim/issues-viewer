@@ -56,10 +56,20 @@ footer {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  padding: 30px;
+  font-size: 12pt;
+}
+
+#head {
+  margin-bottom: 20px;
 }
 
 #requestor {
   margin-bottom: 30px;
+}
+
+.comment {
+  margin-bottom: 20px;
 }
 
 .comments {
@@ -68,4 +78,14 @@ footer {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+}
+
+.state {
+  cursor: default;
+}
+
+coded {
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  color: #0033cc;
+  font-weight: bold;
 }

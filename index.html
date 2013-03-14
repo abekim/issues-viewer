@@ -61,7 +61,7 @@
   <script type="text/template" id="issue-template">
     <td><center><%= number %></center></td>
     <td>
-      <strong class="title"><%= title %>  </strong>
+      <a href="#/issue/<%= number %>"><strong class="title"><%= title %>  </strong></a>
       <% if (labels.length) { %>
         <% var lb = labels[0].name; %>
         <% _.each(labels, function(label) { %>
@@ -107,41 +107,48 @@
   </script>
 
   <script type="text/template" id="detail-template">
-    <h1 style="float:left; padding-right:10px"><%= title %></h1>
-    <h2 class="state" style="float:right;">[ <%= state %> ]</h2>
-    <% if (labels.length) { %>
-      <% var lb = labels[0].name; %>
-      <% _.each(labels, function(label) { %>
-        <% if (label.name != lb) { lb = lb + ', ' + label.name; } %>
-      <% }); %>
-      <h3 class="labels">[ <%= lb %> ]</h3>
-    <% } %>
+    <div class="row-fluid" id="head">
+      <div class="span10">
+        <h1><%= title %></h1>
+        <% if (labels.length) { %>
+          <% var lb = labels[0].name; %>
+          <% _.each(labels, function(label) { %>
+            <% if (label.name != lb) { lb = lb + ', ' + label.name; } %>
+          <% }); %>
+          <h3 class="labels">[ <%= lb %> ]</h3>
+        <% } %>
+      </div>
+      <div class="span2">
+        <a href="#"><h2 class="state">[ <%= state %> ]</h2></a>
+      </div>
+    </div>
     <div class="row-fluid" id="requestor">
       <div class="span2">
         <center>
-          <img class="img-rounded" src="<%= user.avatar_url %>" /><br>
+          <img class="img-rounded" src="<%= user.avatar_url %>" width="200px"/><br>
           <a href="https://github.com/<%= user.login %>" target="_blank"><%= user.login %></a>
         </center>
       </div>
       <div class="span10 hero-unit">
-        <%= body.replace(/@(\w+)/g, '<a href="github.com/$1" target="_blank">@$1</a>').replace(/`+(\w+)`+/g, '<a href="' + url +  '" target="_blank">[redacted]</a>') %>
+        <%= body.replace(/@(\w+)/g, '<a href="github.com/$1" target="_blank">@$1</a>').replace(/(http.[^ ]+)/g, '<a href="$1" target="_blank">$1</a>').replace(/ `([^`]+)` /g, ' <coded>[$1]</coded> ').replace(/```[^`]+```/g, '<br><a href="' + url +  '" target="_blank"><coded>[code redacted]</coded></a><br>') %>
       </div>
     </div>
-    <div class="row-fluid" id="comments">
-      <div class="span2">
-      </div>
-    </div>
+    <div id="comments"></div>
   </script>
 
   <script type="text/template" id="comment-template">
-    <div class="span1">
-      <center>
-        <img class="img-rounded" src="<%= user.avatar_url %>" /><br>
-        <a href="https://github.com/<%= user.login %>" target="_blank"><%= user.login %></a>
-      </center>
-    </div>
-    <div class="span8 comments">
-      <%= body.replace(/@(\w+)/g, '<a href="github.com/$1" target="_blank">@$1</a>').replace(/`+(\w+)`+/g, '<a href="' + url +  '" target="_blank">[redacted]</a>') %>
+    <div class="row-fluid comment">
+      <div class="span2">
+      </div>
+      <div class="span1">
+        <center>
+          <img class="img-rounded" src="<%= user.avatar_url %>" width="200px"/><br>
+          <a href="https://github.com/<%= user.login %>" target="_blank"><%= user.login %></a>
+        </center>
+      </div>
+      <div class="span8 comments">
+        <%= body.replace(/@(\w+)/g, '<a href="github.com/$1" target="_blank">@$1</a>').replace(/```[^`]+```/g, '<br><a href="' + url +  '" target="_blank">[code redacted]</a><br>').replace(/(http.[^ ]+)/g, '<a href="$1" target="_blank">$1</a>').replace(/ `([^`]+)` /g, ' <coded>[$1]</coded> ') %>
+      </div>
     </div>
   </script>
 
@@ -153,6 +160,9 @@
   <script src="models/issue.js"></script>
   <script src="collections/issues.js"></script>
   <script src="views/issueView.js"></script>
+  <script src="models/comment.js"></script>
+  <script src="collections/comments.js"></script>
+  <script src="views/commentView.js"></script>
   <script src="views/appView.js"></script>
   <script src="routers/router.js"></script>
   <script src="app.js"></script>

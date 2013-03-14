@@ -1,5 +1,5 @@
-issues-viewer
-=============
+# issues-viewer
+-------
 
 Github Issues Viewer on Backbone.js framework
 
@@ -11,7 +11,7 @@ The tricky part is getting only 25 of them. One way to do it would be to count 2
 
 ## Data display
 
-Displaying the data in a traditional table format (each attribute with its own column) would make it hard to see all the relevant information. Also, I'm not really sure it makes a lot of sense to include the users' gravatar in the main page. Getting the gravatar isn't hard: issue.user.avatar_url will be the src url for the img tag, but it just seems like a bad design choice. It not only takes up more than necessary amount of space, but it draws the viewer's attention to the images (which isn't what we want).
+Displaying the data in a traditional table format (each attribute with its own column) would make it hard to see all the relevant information. Also, I'm not really sure it makes a lot of sense to include the users' gravatar in the main page. Getting the gravatar isn't hard: `issue.user.avatar_url` will be the src url for the `<img>` tag, but it just seems like a bad design choice. It not only takes up more than necessary amount of space, but it draws the viewer's attention to the images (which isn't what we want).
 
 What I do like, however, is how the [original GitHub issues page](https://github.com/rails/rails/issues) went about displaying the title and the requestor. I believe I can do something similar, as shown in my beautiful ASCII art:
 
@@ -54,3 +54,9 @@ I never realized the comments weren't a part of the issue object that we get fro
 It would be great to extend the functionality of this app to other users, repos, etc. It shouldn't be too hard to implement: using a form, I would collect the user/repo data and run the API calls based on these data. I would have to bind the API calls to the form submission, which again, isn't too hard to implement.
 
 I'm gonna push converting `codes` to their specific blocks here because it's not *the most* important feature. It is pretty important to have it in the app, but not entirely necessary. For now, I'll redact them to `[redacted]` and if I have time, I will go back to it and work on it.
+
+Another thing is to allow a "back to listing" button on details page. I could implement it, but I feel like I've been working on this project for a little too long. 
+
+----------
+
+I definitely had a lot of fun with this project. Because of a lot of schedule conflicts, I ended up working on it on and off starting yesterday, for a total of slightly over 4 hours. I feel a lot more comfortable using Backbone.js after this challenge. I think I'll come back to it every now and then to improve it. In the mean time, feel free to fork the repo and play around with it/judge my code/learn more about Backbone!

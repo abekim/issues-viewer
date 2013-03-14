@@ -8,13 +8,12 @@ var app = app || {};
 
     model: app.Comment,
 
-    localStorage: new Store('i-comments'), //set local storage
+    localStorage: new Backbone.LocalStorage('j-comments'), //set local storage
 
-    //checks to see if a comment with given id exists in coll
     exists: function (id) {
       return this.filter(function (comment) {
         return comment.get('id') == id;
-      })
+      });
     },
 
     //get comments of a specific issue

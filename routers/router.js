@@ -7,13 +7,18 @@ var app = app || {};
   var Workspace = Backbone.Router.extend({
     
     routes: {
-      ':page': 'setPage' //change in pages
-      //issue details page
+      ':page': 'setPage', //change in pages
+      'issue/:number': 'loadDetails' //issue details page
     },
 
     //change app.page to 
     setPage: function (param) {
       app.page = param.trim() || 1;
+    },
+
+    loadDetails: function (param) {
+      app.detail_num = param.trim() || '';
+      app.Issues.trigger('detail');
     }
   });
 

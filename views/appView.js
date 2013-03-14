@@ -10,41 +10,49 @@ $(function ($) {
     //load templates
     home_template: _.template($('#home-template').html()),
     detail_template: _.template($('#detail-template').html()),
+    comment_template: _.template($('#comment-template').html()),
 
     //events to look out for
     events: {
       'click .prev': 'previous',
-      'click .next': 'next',
-      'click .issue-row': 'details'
+      'click .next': 'next'
     },
 
     initialize: function () {
+      //load home
+      this.$el.html(this.home_template());
+
+
       app.url = window.document.URL;
       //if url started at a specific page, get the page #
-      if (app.url.indexOf('#') >= 0) app.page = parseInt(app.url.substring(app.url.indexOf('#') + 2));
-      //otherwise, start from page 1
-      else app.page = 1;
-      app.issues_list = this.$('#issues-list');
-      app.prev = this.$('.prev');
-      app.next = this.$('.next');
+      if (app.url.indexOf('#') >= 0) { 
+        app.page = parseInt(app.url.substring(app.url.indexOf('#') + 2));
+        //set app.url to [base]/index.html
+        app.url = app.url.substring(0, app.url.indexOf('#'));
+      } else { app.page = 1; } //otherwise, start from page 1\
 
-      //load home
-      // this.$el.html(this.home_template());
+      app.Comments.fetch();
       
       //listen for events
       this.listenTo(app.Issues, 'add', this.addIssue);
       this.listenTo(app.Issues, 'reset', this.addAllIssues);
+      this.listenTo(app.Issues, 'detail', this.details);
       this.listenTo(app.Issues, 'all', this.render);
+      this.listenTo(app.Comments, 'add', this.addComment);
+      this.listenTo(app.Comments, 'reset', this.addAllComments);
+      this.listenTo(app.Comments, 'all', this.details);
 
       //load existing collection/get new data from the API
       app.Issues.fetch();
       this.retrieveIssues();
+
+      $('.brand').attr('href', app.url);
     },
 
     render: function () {
       //use router to navigate between different pages
-      app.prev.attr('href','#/' + (app.page - 1).toString());
-      app.next.attr('href','#/' + (app.page + 1).toString());
+      $('.prev').attr('href','#/' + (app.page - 1).toString());
+      $('.next').attr('href','#/' + (app.page + 1).toString());
 
       if (app.page <= 1) { //if first page, no prev should be shown
         $('.prev').toggleClass('inv', true);
@@ -57,11 +65,10 @@ $(function ($) {
     retrieveIssues: function () {
       var create = this.createIssue; //i love functional programming
 
-      $.jsonp({ url: "https://api.github.com/repos/rails/rails/issues?callback=?&page=" + app.page,
+      $.jsonp({ url: "https://api.github.com/repos/rails/rails/issues?client_id=611cad28ff1b6d7b289f&client_secret=2217c60135cf990cb620903920eb33e2ba57520f&callback=?&page=" + app.page + "&per_page=25",
         success: function (res) {
-          var retrieved_issues = res.data;
           //once data is retrieved, add it to the collection
-          _.each(retrieved_issues, create, this);
+          _.each(res.data, create, this);
         }});
     },
 
@@ -71,7 +78,8 @@ $(function ($) {
       //check if the issue already exists in collection
       if (app.Issues.exists(issue_schema.number).length) {
         return
-      } else { //otherwise, add it
+      } else {
+        //otherwise, add it & its comments
         issue_schema.order = app.Issues.nextOrder();
         app.Issues.create(issue_schema);
       }
@@ -86,7 +94,7 @@ $(function ($) {
     //add all the issues in collection to the view
     addAllIssues: function () {
       //reset existing table...
-      app.issues_list.html('<tr><th>#</th><th>Issue</th><th>Submitted by</th></tr>');
+      $('#issues-list').html('<tr><th>#</th><th>Issue</th><th>Submitted by</th></tr>');
       app.Issues.each(this.addIssue, this);
     },
 
@@ -99,7 +107,7 @@ $(function ($) {
         app.url = app.url.substring(0, index);
       }
       
-      window.location = app.url + app.prev.attr('href');
+      window.location = app.url + app.$prev.attr('href');
 
       //toggle the visibility of the issues
       this.toggleAll();
@@ -114,7 +122,7 @@ $(function ($) {
         app.url = app.url.substring(0, index);
       }
       
-      window.location = app.url + app.next.attr('href');
+      window.location = app.url + app.$next.attr('href');
 
       //I only need to retrieve issues from github 
       //  for going to the next page since I know 
@@ -135,8 +143,53 @@ $(function ($) {
       app.Issues.each(this.toggleIssue, this);
     },
 
+    retrieveComments: function () {
+      var make_comment = this.createComment;
+      if (app.detail_num) {
+        var comments_url = app.Issues.exists(app.detail_num)[0].get('comments_url');
+
+        $.jsonp({ url: comments_url + '?client_id=611cad28ff1b6d7b289f&client_secret=2217c60135cf990cb620903920eb33e2ba57520f&callback=?',
+          success: function (res) {
+            _.each(res.data, make_comment, this);
+          }});
+      }
+    },
+
+    //create comments using the same method as issues
+    createComment: function (comment_schema) {
+      //check if the issue already exists in collection
+      if (app.Comments.exists(comment_schema.id).length) {
+        return
+      } else {
+        //otherwise, add it & its comments
+        comment_schema.order = app.Comments.nextOrder();
+        app.Comments.create(comment_schema);
+      }
+    },
+
     details: function () {
-      console.log(this, 'wut');
+      this.retrieveComments();
+      if (app.detail_num) {
+        this.$el.html(this.detail_template(app.Issues.exists(app.detail_num)[0].toJSON()));
+
+        this.addAllComments(app.detail_num);
+      }
+    },
+
+    addComment: function (comment) {
+      var view = new app.CommentView({ model: comment });
+      $('#comments').append(view.render().el);
+    },
+
+    addAllComments: function (num) {
+      $('#comments').html('');
+      if (app.detail_num) {
+        var detailed_issue = app.Issues.exists(app.detail_num)[0];
+        var comments = app.Comments.filterByIssue(detailed_issue.get('url'));
+        if (comments.length) {
+          _.each(comments, this.addComment, this);
+        }
+      }
     }
   });
 });

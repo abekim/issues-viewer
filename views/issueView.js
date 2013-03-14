@@ -15,12 +15,13 @@ $(function () {
     initialize: function () {
       //listen for events
       this.listenTo(this.model, 'change', this.render);
+      this.listenTo(this.model, 'destroy', this.remove);
       this.listenTo(this.model, 'visible', this.toggleVisible);
     },
 
     render: function () {
       //add class issue-row & give a specific link so we can route correctly
-      this.$el.addClass('issue-row').attr('href', '#/issue/' + this.model.get('number')).html(this.template(this.model.toJSON()));
+      this.$el.html(this.template(this.model.toJSON())); //addClass('issue-row').attr('href', '#/issue/' + this.model.get('number'))
       this.toggleVisible(); //show only 25 issues
 
       return this;
@@ -35,6 +36,10 @@ $(function () {
     isHidden: function () {
       var order = this.model.get('order');
       return order > app.page * 25 || order <= (app.page - 1) * 25;
+    },
+
+    remove: function () {
+      this.model.destroy();
     }
   });
 });
