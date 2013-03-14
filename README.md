@@ -3,8 +3,6 @@ issues-viewer
 
 Github Issues Viewer on Backbone.js framework
 
-## Brainstorm
-
 ### How to organize issues
 
 It's clear I need to create an issue model, collection, and view. Once I make the API call, I'll `JSON.parse` the results and store them as separate issue objects.
