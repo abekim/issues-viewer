@@ -19,6 +19,34 @@ What I do like, however, is how the [original GitHub issues page](https://github
 
 Doing this can justify the display of gravatar on the main page and will help fill out the real estate.
 
+While I was working on it, I realized I can't just get complete words just by looking for the `lastIndexOf(' ')`. I was hoping to find a regex solution to it, but couldn't find one that was reasonably simple to implement, hence the massive set of if statements in the following section:
+
+```
+<% var index = msg.lastIndexOf(' '); %>
+<% if (index < msg.lastIndexOf(']')) { index = msg.lastIndexOf(']'); } %>
+<% if (index < msg.lastIndexOf(']')) { index = msg.lastIndexOf('['); } %>
+<% if (index < msg.lastIndexOf('(')) { index = msg.lastIndexOf('('); } %>
+<% if (index < msg.lastIndexOf(')')) { index = msg.lastIndexOf(')'); } %>
+<% if (index < msg.lastIndexOf('<')) { index = msg.lastIndexOf('<'); } %>
+<% if (index < msg.lastIndexOf('>')) { index = msg.lastIndexOf('>'); } %>
+<% if (index < msg.lastIndexOf('&')) { index = msg.lastIndexOf('&'); } %>
+<% if (index < msg.lastIndexOf('^')) { index = msg.lastIndexOf('^'); } %>
+<% if (index < msg.lastIndexOf('*')) { index = msg.lastIndexOf('*'); } %>
+<% if (index < msg.lastIndexOf('!')) { index = msg.lastIndexOf('!'); } %>
+<% if (index < msg.lastIndexOf('+')) { index = msg.lastIndexOf('+'); } %>
+<% if (index < msg.lastIndexOf('-')) { index = msg.lastIndexOf('-'); } %>
+<% if (index < msg.lastIndexOf('_')) { index = msg.lastIndexOf('_'); } %>
+<% if (index < msg.lastIndexOf('%')) { index = msg.lastIndexOf('%'); } %>
+<% if (index < msg.lastIndexOf('$')) { index = msg.lastIndexOf('$'); } %>
+<% if (index < msg.lastIndexOf('#')) { index = msg.lastIndexOf('#'); } %>
+<% if (index < msg.lastIndexOf('@')) { index = msg.lastIndexOf('@'); } %>
+<% if (index < msg.lastIndexOf('=')) { index = msg.lastIndexOf('='); } %>
+<% if (index < msg.lastIndexOf('{')) { index = msg.lastIndexOf('{'); } %>
+<% if (index < msg.lastIndexOf('}')) { index = msg.lastIndexOf('}'); } %>
+<% if (index < msg.lastIndexOf('/')) { index = msg.lastIndexOf('/'); } %>
+<% if (index < msg.lastIndexOf('?')) { index = msg.lastIndexOf('?'); } %>
+```
+
 ## API calls
 
 When making the API call, I simply want to make AJAX `GET` requests. The best place to do it is in a main.js file, which executes on page load. Once again, I'll `JSON.parse` the results and store them as issue objects.

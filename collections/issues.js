@@ -8,7 +8,7 @@ var app = app || {};
 
     model: app.Issue,
 
-    localStorage: new Backbone.LocalStorage('j'), //set local storage
+    localStorage: new Backbone.LocalStorage('issues'), //set local storage
 
     //checks to see if an issue with given num exists in coll
     exists: function (num) {

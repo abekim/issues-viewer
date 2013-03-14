@@ -38,6 +38,7 @@ $(function () {
       return order > app.page * 25 || order <= (app.page - 1) * 25;
     },
 
+    //remove from local storage (for logistical purposes..)
     remove: function () {
       this.model.destroy();
     }

@@ -1,3 +1,4 @@
+/*-- css for table --*/
 .id {
   width: 5%;
 }
@@ -18,19 +19,12 @@ th {
   text-align: center !important;
 }
 
-footer {
-  border-top: 1px solid #eeeeee;
-  padding-top: 10px;
-}
-
+/*-- css for next button (pull-right) --*/
 .next {
   float: right;
 }
 
-.hidden {
-  display: none;
-}
-
+/*-- css for labels, titles, & descriptions of issues --*/
 .labels {
   color: #777777;
 }
@@ -48,10 +42,7 @@ footer {
   line-height: 20px;
 }
 
-.inv {
-  visibility: hidden;
-}
-
+/*-- css for details page --*/
 .hero-unit {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -84,8 +75,21 @@ footer {
   cursor: default;
 }
 
+/*-- instead of using .hidden, which sets display:none;
+        use visibility: hidden; for layout purposes--*/
+.inv {
+  visibility: hidden;
+}
+
+/*-- my attempt at distinguishing the markdown --*/
 coded {
   font-family: Consolas, "Liberation Mono", Courier, monospace;
   color: #0033cc;
   font-weight: bold;
+}
+
+/*-- footer --*/
+footer {
+  border-top: 1px solid #eeeeee;
+  padding-top: 10px;
 }

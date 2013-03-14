@@ -50,6 +50,8 @@ $(function ($) {
     },
 
     render: function () {
+      $('.brand').text("Github Issues Viewer").attr('href', app.url);
+
       //use router to navigate between different pages
       $('.prev').attr('href','#/' + (app.page - 1).toString());
       $('.next').attr('href','#/' + (app.page + 1).toString());
@@ -65,7 +67,7 @@ $(function ($) {
     retrieveIssues: function () {
       var create = this.createIssue; //i love functional programming
 
-      $.jsonp({ url: "https://api.github.com/repos/rails/rails/issues?client_id=611cad28ff1b6d7b289f&client_secret=2217c60135cf990cb620903920eb33e2ba57520f&callback=?&page=" + app.page + "&per_page=25",
+      $.jsonp({ url: "https://api.github.com/repos/rails/rails/issues?callback=?&page=" + app.page + "&per_page=25",
         success: function (res) {
           //once data is retrieved, add it to the collection
           _.each(res.data, create, this);
@@ -79,7 +81,7 @@ $(function ($) {
       if (app.Issues.exists(issue_schema.number).length) {
         return
       } else {
-        //otherwise, add it & its comments
+        //otherwise, add it
         issue_schema.order = app.Issues.nextOrder();
         app.Issues.create(issue_schema);
       }
@@ -107,7 +109,7 @@ $(function ($) {
         app.url = app.url.substring(0, index);
       }
       
-      window.location = app.url + app.$prev.attr('href');
+      window.location = app.url + this.$('.prev').attr('href');
 
       //toggle the visibility of the issues
       this.toggleAll();
@@ -122,7 +124,7 @@ $(function ($) {
         app.url = app.url.substring(0, index);
       }
       
-      window.location = app.url + app.$next.attr('href');
+      window.location = app.url + this.$('.next').attr('href');
 
       //I only need to retrieve issues from github 
       //  for going to the next page since I know 
@@ -143,12 +145,15 @@ $(function ($) {
       app.Issues.each(this.toggleIssue, this);
     },
 
+    //retrieve comments using GitHub API
     retrieveComments: function () {
       var make_comment = this.createComment;
+
       if (app.detail_num) {
+        //get comments_url from the app we want to see in detail
         var comments_url = app.Issues.exists(app.detail_num)[0].get('comments_url');
 
-        $.jsonp({ url: comments_url + '?client_id=611cad28ff1b6d7b289f&client_secret=2217c60135cf990cb620903920eb33e2ba57520f&callback=?',
+        $.jsonp({ url: comments_url + '?callback=?',
           success: function (res) {
             _.each(res.data, make_comment, this);
           }});
@@ -157,18 +162,25 @@ $(function ($) {
 
     //create comments using the same method as issues
     createComment: function (comment_schema) {
-      //check if the issue already exists in collection
+      //check if the comment already exists in collection
       if (app.Comments.exists(comment_schema.id).length) {
         return
       } else {
-        //otherwise, add it & its comments
+        //otherwise, add it to collection
         comment_schema.order = app.Comments.nextOrder();
         app.Comments.create(comment_schema);
       }
     },
 
+    //load detail template instead of home template
     details: function () {
+      //a "back to listing" button. It would be nice to have a more intuitive
+      //  button that does this job, but this works too.
+      $('.brand').text("Back to Listing").attr('href', app.url + '#/' + app.page);
+
+      //retrieve relevant comments
       this.retrieveComments();
+
       if (app.detail_num) {
         this.$el.html(this.detail_template(app.Issues.exists(app.detail_num)[0].toJSON()));
 
@@ -176,16 +188,21 @@ $(function ($) {
       }
     },
 
+    //add a single comment to the view
     addComment: function (comment) {
       var view = new app.CommentView({ model: comment });
       $('#comments').append(view.render().el);
     },
 
+    //add all the comments in collection to the view
     addAllComments: function (num) {
       $('#comments').html('');
+      
       if (app.detail_num) {
+        //filter the collection for only the objects we care about
         var detailed_issue = app.Issues.exists(app.detail_num)[0];
         var comments = app.Comments.filterByIssue(detailed_issue.get('url'));
+
         if (comments.length) {
           _.each(comments, this.addComment, this);
         }
