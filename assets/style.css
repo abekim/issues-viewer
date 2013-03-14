@@ -51,3 +51,21 @@ footer {
 .inv {
   visibility: hidden;
 }
+
+.hero-unit {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#requestor {
+  margin-bottom: 30px;
+}
+
+.comments {
+  background-color: #eee;
+  padding: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}

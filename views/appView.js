@@ -8,11 +8,14 @@ $(function ($) {
     el: '#container',
 
     //load templates
+    home_template: _.template($('#home-template').html()),
+    detail_template: _.template($('#detail-template').html()),
 
     //events to look out for
     events: {
       'click .prev': 'previous',
-      'click .next': 'next'
+      'click .next': 'next',
+      'click .issue-row': 'details'
     },
 
     initialize: function () {
@@ -24,6 +27,9 @@ $(function ($) {
       app.issues_list = this.$('#issues-list');
       app.prev = this.$('.prev');
       app.next = this.$('.next');
+
+      //load home
+      // this.$el.html(this.home_template());
       
       //listen for events
       this.listenTo(app.Issues, 'add', this.addIssue);
@@ -127,6 +133,10 @@ $(function ($) {
     //toggle the visibility of all the issues in collection
     toggleAll: function () {
       app.Issues.each(this.toggleIssue, this);
+    },
+
+    details: function () {
+      console.log(this, 'wut');
     }
   });
 });

@@ -8,6 +8,7 @@ var app = app || {};
     
     routes: {
       ':page': 'setPage' //change in pages
+      //issue details page
     },
 
     //change app.page to 
